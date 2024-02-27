@@ -242,7 +242,7 @@ app.delete('/bookings/delete/:id', deleteABooking);
 app.post('/subscribe', subscribeNewsletter);
 
 app.get('/', (req, res) => {
-  res.json('Welcome to the API server!');
+  res.json('Welcome to Pamelas Pampered Pets API server!');
 });
 
 
