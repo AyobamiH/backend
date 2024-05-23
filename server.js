@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({
   origin: 'https://pamelaspamperedpets.vercel.app',  // Your frontend domain
-  methods: ['POST', 'GET'],
+  methods: ['POST', 'GET', 'DELETE', 'PUT'],
   credentials: true,  // Allow credentials (cookies, authorization headers, etc.)
   allowedHeaders: ['Content-Type', 'Authorization'], // Allow necessary headers
 }));
