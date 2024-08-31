@@ -3,12 +3,19 @@ const mongoose = require('mongoose');
 require("dotenv").config({ path: ".env" });
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
-
+const cors = require('cors');
 const methodOverride = require("method-override");
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cors({
+  origin: 'https://pamelaspamperedpets.vercel.app',  // Your frontend domain
+  methods: ['POST', 'GET'],
+  credentials: true,  // Allow credentials (cookies, authorization headers, etc.)
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allow necessary headers
+}));
 
 // Use forms for put / delete
 app.use(methodOverride("_method"));
