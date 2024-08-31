@@ -82,92 +82,26 @@ const Message = mongoose.model('Message', messageSchema);
 // const Booking = mongoose.model('Booking', bookingSchema);
 // MongoDB
 const bookingSchema = new mongoose.Schema({
-    customerName: {
-        type: String,
-        required: true,
-        
-    },
-    email: {
-        type: String,
-        required: true,
-        lowercase: true
-    },
-    cellPhone: {
-        type: String,
-        required: true,
-        
-    },
-    homePhone: {
-        type: String,
-        
-    },
-    homeAddress: {
-        type: String,
-        required: true,
-        
-    },
-    emergencyContactNumber: {
-        type: String,
-        required: true,
-        
-    },
-    workPhone: {
-        type: String,
-        
-    },
-    petsName: {
-        type: String,
-        required: true,
-        
-    },
-    petsAge: {
-        type: String
-        
-    },
-    dailyRoutine: {
-        type: String
-        
-    },
-    petsHealth: {
-        type: String,
-        
-    },
-    favoriteThings: {
-        type: String,
-        
-    },
-    idioSyncrasies: {
-        type: String,
-        
-    },
-    vetPermission: {
-        type: Boolean,
-        default: false
-    },
-    startDateAndTime: {
-        type: Date,
-        required: true
-    },
-    endDateAndTime: {
-        type: Date,
-        required: true
-    },
-    specialRequest: {
-        type: String,
-        
-    },
-    alarmInfo: {
-        type: String,
-        
-    },
-    miscNotes: {
-        type: String,
-        
-    },
-    additionalNotes: {
-        type: String,
-        
-    }
+    customerName: String,
+    email: String,
+    cellPhone: String,
+    homePhone: String,
+    homeAddress: String,
+    emergencyContactNumber: String,
+    workPhone: String,
+    petsName: String,
+    petsAge: String,
+    dailyRoutine: String,
+    petsHealth: String,
+    favoriteThings: String,
+    idioSyncrasies: String,
+    vetPermission: Boolean,
+    startDateAndTime: Date,
+    endDateAndTime: Date,
+    specialRequest: String,
+    alarmInfo: String,
+    miscNotes: String,
+    additionalNotes: String,
 }, { timestamps: true });
 
 const Booking = mongoose.model('Booking', bookingSchema);
