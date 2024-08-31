@@ -80,7 +80,7 @@ const Message = mongoose.model('Message', messageSchema);
 // }, { timestamps: true });
 
 // const Booking = mongoose.model('Booking', bookingSchema);
-
+// MongoDB
 const bookingSchema = new mongoose.Schema({
     customerName: {
         type: String,
