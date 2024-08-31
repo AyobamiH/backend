@@ -85,61 +85,60 @@ const bookingSchema = new mongoose.Schema({
     customerName: {
         type: String,
         required: true,
-        trim: true
+        
     },
     email: {
         type: String,
         required: true,
-        trim: true,
         lowercase: true
     },
     cellPhone: {
         type: String,
         required: true,
-        trim: true
+        
     },
     homePhone: {
         type: String,
-        trim: true
+        
     },
     homeAddress: {
         type: String,
         required: true,
-        trim: true
+        
     },
     emergencyContactNumber: {
         type: String,
         required: true,
-        trim: true
+        
     },
     workPhone: {
         type: String,
-        trim: true
+        
     },
     petsName: {
         type: String,
         required: true,
-        trim: true
+        
     },
     petsAge: {
-        type: String,
-        trim: true
+        type: String
+        
     },
     dailyRoutine: {
-        type: String,
-        trim: true
+        type: String
+        
     },
     petsHealth: {
         type: String,
-        trim: true
+        
     },
     favoriteThings: {
         type: String,
-        trim: true
+        
     },
     idioSyncrasies: {
         type: String,
-        trim: true
+        
     },
     vetPermission: {
         type: Boolean,
@@ -155,19 +154,19 @@ const bookingSchema = new mongoose.Schema({
     },
     specialRequest: {
         type: String,
-        trim: true
+        
     },
     alarmInfo: {
         type: String,
-        trim: true
+        
     },
     miscNotes: {
         type: String,
-        trim: true
+        
     },
     additionalNotes: {
         type: String,
-        trim: true
+        
     }
 }, { timestamps: true });
 
