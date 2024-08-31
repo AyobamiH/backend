@@ -56,27 +56,119 @@ const messageSchema = new mongoose.Schema({
 const Message = mongoose.model('Message', messageSchema);
 
 // Booking Schema and Model
+// const bookingSchema = new mongoose.Schema({
+//     customerName: String,
+//     email: String,
+//     cellPhone: String,
+//     homePhone: String,
+//     homeAddress: String,
+//     emergencyContactNumber: String,
+//     workPhone: String,
+//     petsName: String,
+//     petsAge: String,
+//     dailyRoutine: String,
+//     petsHealth: String,
+//     favoriteThings: String,
+//     idioSyncrasies: String,
+//     vetPermission: Boolean,
+//     startDateAndTime: Date,
+//     endDateAndTime: Date,
+//     specialRequest: String,
+//     alarmInfo: String,
+//     miscNotes: String,
+//     additionalNotes: String,
+// }, { timestamps: true });
+
+// const Booking = mongoose.model('Booking', bookingSchema);
+
 const bookingSchema = new mongoose.Schema({
-    customerName: String,
-    email: String,
-    cellPhone: String,
-    homePhone: String,
-    homeAddress: String,
-    emergencyContactNumber: String,
-    workPhone: String,
-    petsName: String,
-    petsAge: String,
-    dailyRoutine: String,
-    petsHealth: String,
-    favoriteThings: String,
-    idioSyncrasies: String,
-    vetPermission: Boolean,
-    startDateAndTime: Date,
-    endDateAndTime: Date,
-    specialRequest: String,
-    alarmInfo: String,
-    miscNotes: String,
-    additionalNotes: String,
+    customerName: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    email: {
+        type: String,
+        required: true,
+        trim: true,
+        lowercase: true
+    },
+    cellPhone: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    homePhone: {
+        type: String,
+        trim: true
+    },
+    homeAddress: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    emergencyContactNumber: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    workPhone: {
+        type: String,
+        trim: true
+    },
+    petsName: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    petsAge: {
+        type: String,
+        trim: true
+    },
+    dailyRoutine: {
+        type: String,
+        trim: true
+    },
+    petsHealth: {
+        type: String,
+        trim: true
+    },
+    favoriteThings: {
+        type: String,
+        trim: true
+    },
+    idioSyncrasies: {
+        type: String,
+        trim: true
+    },
+    vetPermission: {
+        type: Boolean,
+        default: false
+    },
+    startDateAndTime: {
+        type: Date,
+        required: true
+    },
+    endDateAndTime: {
+        type: Date,
+        required: true
+    },
+    specialRequest: {
+        type: String,
+        trim: true
+    },
+    alarmInfo: {
+        type: String,
+        trim: true
+    },
+    miscNotes: {
+        type: String,
+        trim: true
+    },
+    additionalNotes: {
+        type: String,
+        trim: true
+    }
 }, { timestamps: true });
 
 const Booking = mongoose.model('Booking', bookingSchema);
