@@ -142,7 +142,7 @@ const bookingSchema = new mongoose.Schema({
         trim: true
     },
     vetPermission: {
-        type: Boolean,
+        type: String,
         default: false
     },
     startDateAndTime: {
