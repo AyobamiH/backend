@@ -4,6 +4,7 @@ require("dotenv").config({ path: ".env" });
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const cors = require('cors');
+const path = require('path');
 const methodOverride = require("method-override");
 const app = express();
 
@@ -55,32 +56,6 @@ const messageSchema = new mongoose.Schema({
 
 const Message = mongoose.model('Message', messageSchema);
 
-// Booking Schema and Model
-// const bookingSchema = new mongoose.Schema({
-//     customerName: String,
-//     email: String,
-//     cellPhone: String,
-//     homePhone: String,
-//     homeAddress: String,
-//     emergencyContactNumber: String,
-//     workPhone: String,
-//     petsName: String,
-//     petsAge: String,
-//     dailyRoutine: String,
-//     petsHealth: String,
-//     favoriteThings: String,
-//     idioSyncrasies: String,
-//     vetPermission: Boolean,
-//     startDateAndTime: Date,
-//     endDateAndTime: Date,
-//     specialRequest: String,
-//     alarmInfo: String,
-//     miscNotes: String,
-//     additionalNotes: String,
-// }, { timestamps: true });
-
-// const Booking = mongoose.model('Booking', bookingSchema);
-// MongoDB
 const bookingSchema = new mongoose.Schema({
     customerName: String,
     email: String,
@@ -268,6 +243,13 @@ app.post('/subscribe', subscribeNewsletter);
 
 app.get('/', (req, res) => {
   res.json('Welcome to the API server!');
+});
+
+
+app.use(express.static(path.join(__dirname, 'dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
 });
 
 // 6. Server Startup
