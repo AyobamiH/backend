@@ -1,0 +1,43 @@
+.env
+
+.env
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+# Ignore node_modules
+node_modules/*
+
+# Ignore build artifacts (add this if you have a build folder)
+dist/
+build/
+
+# Ignore environment variables
+.env
+
+# Ignore database files
+db.json
+
+# Ignore specific operating system files
+.DS_Store
+Thumbs.db
