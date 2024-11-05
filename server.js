@@ -57,26 +57,36 @@ const messageSchema = new mongoose.Schema({
 const Message = mongoose.model('Message', messageSchema);
 
 const bookingSchema = new mongoose.Schema({
-    customerName: String,
-    email: String,
-    cellPhone: String,
-    homePhone: String,
-    homeAddress: String,
-    emergencyContactNumber: String,
-    workPhone: String,
-    petsName: String,
-    petsAge: String,
-    dailyRoutine: String,
-    petsHealth: String,
-    favoriteThings: String,
-    idioSyncrasies: String,
-    vetPermission: Boolean,
-    startDateAndTime: Date,
-    endDateAndTime: Date,
-    specialRequest: String,
-    alarmInfo: String,
-    miscNotes: String,
-    additionalNotes: String,
+  customerName: String,
+  email: String,
+  cellPhone: String,
+  homePhone: String,
+  homeAddress: String,
+  emergencyContactNumber: String,
+  workPhone: String,
+  petsName: String,
+  petsAge: String,
+  dailyRoutine: String,
+  petsHealth: String,
+  favoriteThings: String,
+  idioSyncrasies: String,
+  vetPermission: Boolean,
+  startDateAndTime: Date,
+  endDateAndTime: Date,
+  specialRequest: String,
+  alarmInfo: String,
+  miscNotes: String,
+  additionalNotes: String,
+
+  // New fields for travel itinerary
+  departureDateTime: Date,
+  returnDateTime: Date,
+  destination: String,
+  emergencyContactName: String,
+  emergencyContactPhone: String,
+  flightNumber: String,
+  departureAirport: String,
+  arrivalAirport: String,
 }, { timestamps: true });
 
 const Booking = mongoose.model('Booking', bookingSchema);
@@ -133,20 +143,53 @@ const deleteMessage = async (req, res) => {
 
 // 3. Controller Logic for Bookings
 
+// const createBooking = async (req, res) => {
+//   try {
+//     const {
+//       customerName, email, cellPhone, homePhone, homeAddress, emergencyContactNumber,
+//       workPhone, petsName, petsAge, dailyRoutine, petsHealth, favoriteThings,
+//       idioSyncrasies, vetPermission, startDateAndTime, endDateAndTime, specialRequest,
+//       alarmInfo, miscNotes, additionalNotes
+//     } = req.body;
+
+//     const newBooking = new Booking({
+//       customerName, email, cellPhone, homePhone, homeAddress, emergencyContactNumber,
+//       workPhone, petsName, petsAge, dailyRoutine, petsHealth, favoriteThings,
+//       idioSyncrasies, vetPermission, startDateAndTime, endDateAndTime, specialRequest,
+//       alarmInfo, miscNotes, additionalNotes
+//     });
+
+//     await newBooking.save();
+
+//     res.status(200).json({ success: true, message: 'Booking successful!' });
+//   } catch (error) {
+//     console.error('Controller Error Saving Booking:', error);
+//     res.status(500).json({ success: false, message: 'Error Booking!' });
+//   }
+// };
+
 const createBooking = async (req, res) => {
   try {
     const {
       customerName, email, cellPhone, homePhone, homeAddress, emergencyContactNumber,
       workPhone, petsName, petsAge, dailyRoutine, petsHealth, favoriteThings,
       idioSyncrasies, vetPermission, startDateAndTime, endDateAndTime, specialRequest,
-      alarmInfo, miscNotes, additionalNotes
+      alarmInfo, miscNotes, additionalNotes,
+
+      // New fields for travel itinerary
+      departureDateTime, returnDateTime, destination, emergencyContactName,
+      emergencyContactPhone, flightNumber, departureAirport, arrivalAirport
     } = req.body;
 
     const newBooking = new Booking({
       customerName, email, cellPhone, homePhone, homeAddress, emergencyContactNumber,
       workPhone, petsName, petsAge, dailyRoutine, petsHealth, favoriteThings,
       idioSyncrasies, vetPermission, startDateAndTime, endDateAndTime, specialRequest,
-      alarmInfo, miscNotes, additionalNotes
+      alarmInfo, miscNotes, additionalNotes,
+
+      // Travel itinerary data
+      departureDateTime, returnDateTime, destination, emergencyContactName,
+      emergencyContactPhone, flightNumber, departureAirport, arrivalAirport
     });
 
     await newBooking.save();
