@@ -6,7 +6,7 @@ const MongoStore = require("connect-mongo");
 const cors = require('cors');
 const path = require('path');
 const methodOverride = require("method-override");
-console.log(process.env.TELNYX_API_KEY)
+
 const telnyx = require('telnyx')(process.env.TELNYX_API_KEY); // Use environment variable for the API key
 
 const app = express();
