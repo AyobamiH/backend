@@ -7,6 +7,12 @@ const cors = require('cors');
 const path = require('path');
 const methodOverride = require("method-override");
 const app = express();
+const twilio = require('twilio');
+
+// Twilio Configuration
+const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER;
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -107,6 +113,13 @@ const sendMessage = async (req, res) => {
         const newMessage = new Message({ name, email, phone, message, agreement });
         await newMessage.save();
 
+         // Send SMS Notification
+        await twilioClient.messages.create({
+            body: `New Message Received from ${name}. Email: ${email}, Phone: ${phone}`,
+            from: TWILIO_PHONE_NUMBER,
+            to: process.env.ALERT_PHONE_NUMBER, // Your phone number to receive alerts
+        });
+
         res.status(200).json({ success: true, message: 'Message sent successfully' });
     } catch (error) {
         console.error('Controller Error saving message:', error);
@@ -141,32 +154,6 @@ const deleteMessage = async (req, res) => {
     }
 };
 
-// 3. Controller Logic for Bookings
-
-// const createBooking = async (req, res) => {
-//   try {
-//     const {
-//       customerName, email, cellPhone, homePhone, homeAddress, emergencyContactNumber,
-//       workPhone, petsName, petsAge, dailyRoutine, petsHealth, favoriteThings,
-//       idioSyncrasies, vetPermission, startDateAndTime, endDateAndTime, specialRequest,
-//       alarmInfo, miscNotes, additionalNotes
-//     } = req.body;
-
-//     const newBooking = new Booking({
-//       customerName, email, cellPhone, homePhone, homeAddress, emergencyContactNumber,
-//       workPhone, petsName, petsAge, dailyRoutine, petsHealth, favoriteThings,
-//       idioSyncrasies, vetPermission, startDateAndTime, endDateAndTime, specialRequest,
-//       alarmInfo, miscNotes, additionalNotes
-//     });
-
-//     await newBooking.save();
-
-//     res.status(200).json({ success: true, message: 'Booking successful!' });
-//   } catch (error) {
-//     console.error('Controller Error Saving Booking:', error);
-//     res.status(500).json({ success: false, message: 'Error Booking!' });
-//   }
-// };
 
 const createBooking = async (req, res) => {
   try {
@@ -193,6 +180,14 @@ const createBooking = async (req, res) => {
     });
 
     await newBooking.save();
+
+    // Send SMS Notification
+        await twilioClient.messages.create({
+            body: `New Booking Received from ${customerName}. Email: ${email}, Cell Phone: ${cellPhone}. Start: ${startDateAndTime}, End: ${endDateAndTime}.`,
+            from: TWILIO_PHONE_NUMBER,
+            to: process.env.ALERT_PHONE_NUMBER, // Your phone number to receive alerts
+        });
+
 
     res.status(200).json({ success: true, message: 'Booking successful!' });
   } catch (error) {
