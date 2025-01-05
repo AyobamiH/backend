@@ -6,12 +6,12 @@ const MongoStore = require("connect-mongo");
 const cors = require('cors');
 const path = require('path');
 const methodOverride = require("method-override");
+const telnyx = require('telnyx')(process.env.TELNYX_API_KEY);
+const axios = require('axios'); // For making HTTP requests
 const app = express();
-const twilio = require('twilio');
+// const telnyx = require('telnyx')(process.env.TELNYX_API_KEY);
 
-// Twilio Configuration
-const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
-const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER;
+
 
 
 app.use(express.json());
@@ -104,6 +104,46 @@ const newsletterSchema = new mongoose.Schema({
 
 const Newsletter = mongoose.model('Newsletter', newsletterSchema);
 
+// Notification Logic
+// const sendTelnyxNotification = async (to, message) => {
+//   try {
+//     const response = await telnyx.messages.create({
+//       from: process.env.TELNYX_PHONE_NUMBER, // Your Telnyx messaging number
+//       to: to, // Recipient's phone number
+//       text: message, // Notification message
+//     });
+//     console.log('Notification sent:', response);
+//   } catch (error) {
+//     console.error('Error sending notification via Telnyx:', error);
+//   }
+// };
+
+
+const sendTelnyxNotification = async (to, message) => {
+  try {
+    // Prepare the payload for the POST request
+    const data = {
+      from: process.env.TELNYX_PHONE_NUMBER,  // Your Telnyx messaging number
+      to: to,  // Recipient's phone number
+      text: message,  // Notification message
+    };
+
+    // Make a POST request to the Telnyx API
+    const response = await axios.post('https://api.telnyx.com/v2/messages', data, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.TELNYX_API_KEY}`,  // Your Telnyx API key
+      },
+    });
+
+    // Log the response from the API
+    console.log('Notification sent:', response.data);
+  } catch (error) {
+    console.error('Error sending notification via Telnyx:', error);
+  }
+};
+
+
 // 2. Controller Logic for Messages
 
 const sendMessage = async (req, res) => {
@@ -114,11 +154,10 @@ const sendMessage = async (req, res) => {
         await newMessage.save();
 
          // Send SMS Notification
-        await twilioClient.messages.create({
-            body: `New Message Received from ${name}. Email: ${email}, Phone: ${phone}`,
-            from: TWILIO_PHONE_NUMBER,
-            to: process.env.ALERT_PHONE_NUMBER, // Your phone number to receive alerts
-        });
+        await sendTelnyxNotification(
+          process.env.ALERT_PHONE_NUMBER,
+          `New message from ${name}. Check your inbox for details.`
+        );
 
         res.status(200).json({ success: true, message: 'Message sent successfully' });
     } catch (error) {
@@ -182,11 +221,11 @@ const createBooking = async (req, res) => {
     await newBooking.save();
 
     // Send SMS Notification
-        await twilioClient.messages.create({
-            body: `New Booking Received from ${customerName}. Email: ${email}, Cell Phone: ${cellPhone}. Start: ${startDateAndTime}, End: ${endDateAndTime}.`,
-            from: process.env.TWILIO_PHONE_NUMBER,
-            to: process.env.ALERT_PHONE_NUMBER, // Your phone number to receive alerts
-        });
+     // Send Telnyx Notification
+    await sendTelnyxNotification(
+      process.env.ALERT_PHONE_NUMBER,
+      `New booking from ${customerName}. Start: ${startDateAndTime}, End: ${endDateAndTime}.`
+    );
 
 
     res.status(200).json({ success: true, message: 'Booking successful!' });
