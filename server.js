@@ -126,6 +126,10 @@ const sendMessage = async (req, res) => {
             from: process.env.TELNYX_PHONE_NUMBER, // Replace with your Telnyx number
             to: process.env.ALERT_PHONE_NUMBER, // Replace with the recipient's number
             text: notificationText,
+            messaging_profile_id: '40019437-a458-4665-b01b-894982b862ff',
+            
+            type: 'SMS'
+
         });
 
         res.status(200).json({ success: true, message: 'Message sent successfully and notification delivered' });
