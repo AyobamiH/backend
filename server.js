@@ -184,7 +184,7 @@ const createBooking = async (req, res) => {
     // Send SMS Notification
         await twilioClient.messages.create({
             body: `New Booking Received from ${customerName}. Email: ${email}, Cell Phone: ${cellPhone}. Start: ${startDateAndTime}, End: ${endDateAndTime}.`,
-            from: TWILIO_PHONE_NUMBER,
+            from: process.env.TWILIO_PHONE_NUMBER,
             to: process.env.ALERT_PHONE_NUMBER, // Your phone number to receive alerts
         });
 
