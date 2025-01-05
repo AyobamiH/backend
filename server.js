@@ -6,10 +6,9 @@ const MongoStore = require("connect-mongo");
 const cors = require('cors');
 const path = require('path');
 const methodOverride = require("method-override");
-const telnyx = require('telnyx')(process.env.TELNYX_API_KEY);
-// const axios = require('axios'); // For making HTTP requests
+
 const app = express();
-// const telnyx = require('telnyx')(process.env.TELNYX_API_KEY);
+
 
 
 
@@ -104,47 +103,6 @@ const newsletterSchema = new mongoose.Schema({
 
 const Newsletter = mongoose.model('Newsletter', newsletterSchema);
 
-// Notification Logic
-// const sendTelnyxNotification = async (to, message) => {
-//   try {
-//     const response = await telnyx.messages.create({
-//       from: process.env.TELNYX_PHONE_NUMBER, // Your Telnyx messaging number
-//       to: to, // Recipient's phone number
-//       text: message, // Notification message
-//     });
-//     console.log('Notification sent:', response);
-//   } catch (error) {
-//     console.error('Error sending notification via Telnyx:', error);
-//   }
-// };
-
-
-// const sendTelnyxNotification = async (to, message) => {
-//   try {
-//     // Prepare the payload for the POST request
-//     const data = {
-//       from: process.env.TELNYX_PHONE_NUMBER,  // Your Telnyx messaging number
-//       to: to,  // Recipient's phone number
-//       text: message,  // Notification message
-//     };
-
-//     // Make a POST request to the Telnyx API
-//     const response = await axios.post('https://api.telnyx.com/v2/messages', data, {
-//       headers: {
-//         'Content-Type': 'application/json',
-//         'Authorization': `Bearer ${process.env.TELNYX_API_KEY}`,  // Your Telnyx API key
-//       },
-//     });
-
-//     // Log the response from the API
-//     console.log('Notification sent:', response.data);
-//   } catch (error) {
-//     console.error('Error sending notification via Telnyx:', error);
-//   }
-// };
-
-
-// 2. Controller Logic for Messages
 
 const sendMessage = async (req, res) => {
     try {
@@ -153,11 +111,7 @@ const sendMessage = async (req, res) => {
         const newMessage = new Message({ name, email, phone, message, agreement });
         await newMessage.save();
 
-         // Send SMS Notification
-        await sendTelnyxNotification(
-          process.env.ALERT_PHONE_NUMBER,
-          `New message from ${name}. Check your inbox for details.`
-        );
+       
 
         res.status(200).json({ success: true, message: 'Message sent successfully' });
     } catch (error) {
@@ -220,12 +174,6 @@ const createBooking = async (req, res) => {
 
     await newBooking.save();
 
-    // Send SMS Notification
-     // Send Telnyx Notification
-    // await sendTelnyxNotification(
-    //   process.env.ALERT_PHONE_NUMBER,
-    //   `New booking from ${customerName}. Start: ${startDateAndTime}, End: ${endDateAndTime}.`
-    // );
 
 
     res.status(200).json({ success: true, message: 'Booking successful!' });
