@@ -6,6 +6,7 @@ const MongoStore = require("connect-mongo");
 const cors = require('cors');
 const path = require('path');
 const methodOverride = require("method-override");
+const telnyx = require('telnyx')(process.env.TELNYX_API_KEY); // Use environment variable for the API key
 
 const app = express();
 
@@ -113,7 +114,21 @@ const sendMessage = async (req, res) => {
 
        
 
-        res.status(200).json({ success: true, message: 'Message sent successfully' });
+         const notificationText = `
+          New Message Received:
+          Name: ${name}
+          Email: ${email}
+          Phone: ${phone}
+          Message: ${message}
+        `;
+
+        await telnyx.messages.create({
+            from: process.env.TELNYX_PHONE_NUMBER, // Replace with your Telnyx number
+            to: process.env.ALERT_PHONE_NUMBER, // Replace with the recipient's number
+            text: notificationText,
+        });
+
+        res.status(200).json({ success: true, message: 'Message sent successfully and notification delivered' });
     } catch (error) {
         console.error('Controller Error saving message:', error);
         res.status(500).json({ success: false, message: 'Error sending message' });
