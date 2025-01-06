@@ -1,11 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
-require("dotenv").config({ path: ".env" });
+require('dotenv').config();
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const cors = require('cors');
 const path = require('path');
 const methodOverride = require("method-override");
+console.log(process.env.TELNYX_API_KEY)
 const telnyx = require('telnyx')(process.env.TELNYX_API_KEY); // Use environment variable for the API key
 
 const app = express();
@@ -131,7 +132,7 @@ const sendMessage = async (req, res) => {
             type: 'SMS'
 
         });
-
+        console.log("message saved and telnyx text gone through")
         res.status(200).json({ success: true, message: 'Message sent successfully and notification delivered' });
     } catch (error) {
         console.error('Controller Error saving message:', error);
