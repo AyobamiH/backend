@@ -82,6 +82,8 @@ const bookingSchema = new mongoose.Schema({
   favoriteThings: String,
   idioSyncrasies: String,
   vetPermission: Boolean,
+  emergencyVetsName: String,
+  emergencyVetsNumber: String,
   vetsName: String,
   vetsPhone: String,
   vetsAddress: String,
@@ -186,7 +188,7 @@ const createBooking = async (req, res) => {
     const {
       customerName, email, cellPhone, homePhone, homeAddress, emergencyContactNumber,
       workPhone, petsName, petsAge, dailyRoutine, petsHealth, favoriteThings,
-      idioSyncrasies, vetPermission, vetsName, vetsPhone, vetsAddress, startDateAndTime, endDateAndTime, specialRequest,
+      idioSyncrasies, vetPermission, vetsName, vetsPhone, vetsAddress, emergencyVetsName, emergencyVetsNumber, startDateAndTime, endDateAndTime, specialRequest,
       alarmInfo, miscNotes, additionalNotes,
 
       // New fields for travel itinerary
@@ -197,7 +199,7 @@ const createBooking = async (req, res) => {
     const newBooking = new Booking({
       customerName, email, cellPhone, homePhone, homeAddress, emergencyContactNumber,
       workPhone, petsName, petsAge, dailyRoutine, petsHealth, favoriteThings,
-      idioSyncrasies, vetPermission, vetsName, vetsPhone, vetsAddress, startDateAndTime, endDateAndTime, specialRequest,
+      idioSyncrasies, vetPermission, vetsName, vetsPhone, vetsAddress, emergencyVetsName, emergencyVetsNumber, startDateAndTime, endDateAndTime, specialRequest,
       alarmInfo, miscNotes, additionalNotes,
 
       // Travel itinerary data
