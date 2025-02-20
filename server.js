@@ -64,6 +64,8 @@ const messageSchema = new mongoose.Schema({
 const Message = mongoose.model('Message', messageSchema);
 
 const bookingSchema = new mongoose.Schema({
+  
+  // Customer Information
   customerName: String,
   email: String,
   cellPhone: String,
@@ -71,6 +73,8 @@ const bookingSchema = new mongoose.Schema({
   homeAddress: String,
   emergencyContactNumber: String,
   workPhone: String,
+  
+  // Pet Information
   petsName: String,
   petsAge: String,
   dailyRoutine: String,
@@ -78,6 +82,11 @@ const bookingSchema = new mongoose.Schema({
   favoriteThings: String,
   idioSyncrasies: String,
   vetPermission: Boolean,
+  vetsName: String,
+  vetsPhone: String,
+  vetsAddress: String,
+
+  // Sitting Information
   startDateAndTime: Date,
   endDateAndTime: Date,
   specialRequest: String,
@@ -88,12 +97,16 @@ const bookingSchema = new mongoose.Schema({
   // New fields for travel itinerary
   departureDateTime: Date,
   returnDateTime: Date,
+  departureAirport: String,
+  departureFlightNumber: String,
   destination: String,
+  arrivalAirport: String,
+  arrivalFlightNumber: String,
   emergencyContactName: String,
   emergencyContactPhone: String,
-  flightNumber: String,
-  departureAirport: String,
-  arrivalAirport: String,
+  
+  
+  
 }, { timestamps: true });
 
 const Booking = mongoose.model('Booking', bookingSchema);
@@ -173,23 +186,23 @@ const createBooking = async (req, res) => {
     const {
       customerName, email, cellPhone, homePhone, homeAddress, emergencyContactNumber,
       workPhone, petsName, petsAge, dailyRoutine, petsHealth, favoriteThings,
-      idioSyncrasies, vetPermission, startDateAndTime, endDateAndTime, specialRequest,
+      idioSyncrasies, vetPermission, vetsName, vetsPhone, vetsAddress, startDateAndTime, endDateAndTime, specialRequest,
       alarmInfo, miscNotes, additionalNotes,
 
       // New fields for travel itinerary
-      departureDateTime, returnDateTime, destination, emergencyContactName,
-      emergencyContactPhone, flightNumber, departureAirport, arrivalAirport
+      departureDateTime, returnDateTime, departureFlightNumber, departureAirport, destination, arrivalAirport, arrivalFlightNumber, emergencyContactName,
+      emergencyContactPhone
     } = req.body;
 
     const newBooking = new Booking({
       customerName, email, cellPhone, homePhone, homeAddress, emergencyContactNumber,
       workPhone, petsName, petsAge, dailyRoutine, petsHealth, favoriteThings,
-      idioSyncrasies, vetPermission, startDateAndTime, endDateAndTime, specialRequest,
+      idioSyncrasies, vetPermission, vetsName, vetsPhone, vetsAddress, startDateAndTime, endDateAndTime, specialRequest,
       alarmInfo, miscNotes, additionalNotes,
 
       // Travel itinerary data
-      departureDateTime, returnDateTime, destination, emergencyContactName,
-      emergencyContactPhone, flightNumber, departureAirport, arrivalAirport
+      departureDateTime, returnDateTime, departureAirport, departureFlightNumber, destination, emergencyContactName,
+      emergencyContactPhone, arrivalAirport, arrivalFlightNumber
     });
 
     await newBooking.save();
