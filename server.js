@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({
-  origin: 'https://hellopamela.com',  // Your frontend domain
+  origin: ['https://hellopamela.com', 'https://tailwaggingwebdesign.com',],  // Your frontend domain
   methods: ['POST', 'GET', 'DELETE', 'PUT'],
   credentials: true,  // Allow credentials (cookies, authorization headers, etc.)
   allowedHeaders: ['Content-Type', 'Authorization'], // Allow necessary headers
