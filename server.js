@@ -7,8 +7,6 @@ const cors = require('cors');
 const path = require('path');
 const methodOverride = require("method-override");
 
-const telnyx = require('telnyx')(process.env.TELNYX_API_KEY); // Use environment variable for the API key
-
 const app = express();
 
 
@@ -129,25 +127,6 @@ const sendMessage = async (req, res) => {
         await newMessage.save();
 
        
-
-         const notificationText = `
-          New Message Received:
-          Name: ${name}
-          Email: ${email}
-          Phone: ${phone}
-          Message: ${message}
-        `;
-
-        await telnyx.messages.create({
-            from: process.env.TELNYX_PHONE_NUMBER, // Replace with your Telnyx number
-            to: process.env.ALERT_PHONE_NUMBER, // Replace with the recipient's number
-            text: notificationText,
-            messaging_profile_id: '40019437-a458-4665-b01b-894982b862ff',
-            
-            type: 'SMS'
-
-        });
-        console.log("message saved and telnyx text gone through")
         res.status(200).json({ success: true, message: 'Message sent successfully and notification delivered' });
     } catch (error) {
         console.error('Controller Error saving message:', error);
